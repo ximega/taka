@@ -1,2 +1,0 @@
-run:
-	py main.py
