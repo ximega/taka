@@ -37,9 +37,9 @@ les [reg], [reg#]
 | h
 h[command] ...[args]
 | lose
-lose %[bas]
+lose [bas]
 | take
-take %[bas]
+take [bas]
 | cln
 cln [reg]
 | sum
