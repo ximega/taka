@@ -37,10 +37,12 @@ def check(cfile, token, file_name):
         cfile.write("\n    return\n")
 
     elif token[0] == 'syscall':
+        add = "{" + token[2] + "}"
         cfile.write(f"""
     if {token[2]} == '1x00': print({token[1].replace(",", "")})
-    if {token[2]} == '1x01': return({token[1].replace(",", "")})
-    if {token[2]} == '1x02': {token[1].replace(",", "")} = input({token[1].replace(",", "")})""")
+    elif {token[2]} == '1x01': return({token[1].replace(",", "")})
+    elif {token[2]} == '1x02': {token[1].replace(",", "")} = input()
+    else: exception(f"Unkown syscall command at {token[3]}, name: %s")""" % add)
 
     elif token[0] == 'lose':
         cfile.write(f"""
@@ -62,15 +64,19 @@ def check(cfile, token, file_name):
 
     elif token[0] == 'min':
         cfile.write(f"""
-    {token[1].replace("m", "")} = {token[1].replace(",", "")} - {token[2]}""")
+    {token[1].replace(",", "")} = {token[1].replace(",", "")} - {token[2]}""")
 
     elif token[0] == 'mul':
         cfile.write(f"""
-    {token[1].replace("m", "")} = {token[1].replace(",", "")} * {token[2]}""")
+    {token[1].replace(",", "")} = {token[1].replace(",", "")} * {token[2]}""")
 
     elif token[0] == 'div':
         cfile.write(f"""
-    {token[1].replace("m", "")} = {token[1].replace(",", "")} / {token[2]}""")
+    {token[1].replace(",", "")} = {token[1].replace(",", "")} / {token[2]}""")
+
+    elif token[0] == 'tint':
+        cfile.write(f"""
+    {token[1].replace(",", "")} = int({token[1].replace(",", "")})""")
 
 def check_cond(cfile, token_, file_name):
     kw = token_[0][1:]
@@ -100,9 +106,9 @@ def check_cond(cfile, token_, file_name):
         add = "{" + token_[2] + "}"
         cfile.write(f"""
         if {token_[2]} == '1x00': print({token_[1].replace(",", "")})
-        if {token_[2]} == '1x01': return({token_[1].replace(",", "")})
-        if {token_[2]} == '1x02': {token_[1].replace(",", "")} = input({token_[1].replace(",", "")})
-        else: exception(f"Unkown syscall command at {token_[3]}, name: %s")""" % add, file_name)
+        elif {token_[2]} == '1x01': return({token_[1].replace(",", "")})
+        elif {token_[2]} == '1x02': {token_[1].replace(",", "")} = input()
+        else: exception(f"Unkown syscall command at {token_[3]}, name: %s")""" % add)
 
     elif kw == 'lose':
         cfile.write(f"""
@@ -133,6 +139,10 @@ def check_cond(cfile, token_, file_name):
     elif kw == 'div':
         cfile.write(f"""
         {token_[1].replace(",", "")} = {token_[1].replace(",", "")} / {token_[2]}""")
+
+    elif kw == 'tint':
+        cfile.write(f"""
+        {token_[1].replace(",", "")} = int({token_[1].replace(",", "")})""")
 
 def compile_it():
     file_name = input("file name:\n")

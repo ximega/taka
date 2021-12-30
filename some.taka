@@ -5,6 +5,11 @@ set j
 .main:
     ; Z=(a*b+c)*4+b*(d - f)
     ; a = d, c = f
+    ; a = jax
+    ; b = jbx
+    ; c = jcx
+    ; d = jdx
+    ; f = jfx
     ; a * b
     ; a + c
     ; d - f
@@ -12,10 +17,14 @@ set j
     ; d * b
     ; a + d
     mov jax, "a"+sp+"number:"
-    call prompt, jax
     call print_message, jax
+    mov jby, 1x02
+    syscall jbx, jby
+    call print_message, jbx
 
-    mov jkx, lal
+    mov jax, "2"
+    int jax
+    call print_message, jax
 
     call exit
 
@@ -34,20 +43,6 @@ set j
 
     take jax
     
-    ret
-
-.prompt
-    inp jax
-
-    mov jbx, jax
-
-    cln jax
-
-    mov jby, 1x02
-    syscall jbx, jby
-
-    mov jax, jbx
-
     ret
 
 .exit

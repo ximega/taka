@@ -50,6 +50,8 @@ syscall [system]
 inp ...[reg]
 | add
 add [reg], [reg#]
+| tint
+tint [reg]
 
 ~ commands (system calls)
 1x00 - writing
