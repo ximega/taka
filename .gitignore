@@ -3,3 +3,4 @@ Makefile
 some.py
 commit.py
 run.py
+__pycache__
