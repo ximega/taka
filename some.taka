@@ -1,0 +1,57 @@
+START:
+
+set j
+
+.main:
+    ; Z=(a*b+c)*4+b*(d - f)
+    ; a = d, c = f
+    ; a * b
+    ; a + c
+    ; d - f
+    ; a * 4
+    ; d * b
+    ; a + d
+    mov jax, "a"+sp+"number:"
+    call prompt, jax
+    call print_message, jax
+
+    call exit
+
+.print_message
+    inp jax
+
+    mov jbx, jax
+
+    lose jax
+
+    mov jby, 1x00
+    syscall jbx, jby
+
+    cln jby
+    cln jbx
+
+    take jax
+    
+    ret
+
+.prompt
+    inp jax
+
+    mov jbx, jax
+
+    cln jax
+
+    mov jby, 1x02
+    syscall jbx, jby
+
+    mov jax, jbx
+
+    ret
+
+.exit
+    mov jay, 0
+    mov jby, 1x01
+    syscall jay, jby
+ 
+
+END
